@@ -1,0 +1,30 @@
+@@grammar :: QCIR_NONPRENEX_CLEANSED_CLOSED_NNF
+
+# Assume non-prenex and closed formulas, so no qblock-stmt and no qblock-quant
+# Assume nnf formulas, so the only connectives are AND and OR and gates are never negated
+# At the moment, input files with comments are not supported
+
+qcirFile = formatId outputStmt {gateStmt /\n/}*;
+
+formatId = '#QCIR-G14' [integer] /\n/;
+
+varList = ','.{ var }+;
+
+litList = ','.{ lit }+ | ();
+
+outputStmt = 'output('lit')' /\n/;
+
+gateStmt = 
+    gate_name:gvar '=' connective:'and''('inputs:litList')' | 
+    gate_name:gvar '=' connective:'or''('inputs:litList')' |
+    gate_name:gvar '=' quantifier:quant'('quantified_vars:varList';' input:lit')';
+
+quant = 'exists' | 'forall';
+
+var = /[\dA-Za-z\_]+/;
+
+gvar = /[\dA-Za-z\_]+/;
+
+lit = var | /-[\dA-Za-z\_]+/ | gvar;    # -var is expressed as /-[\dA-Za-z\_]+/ s.t. negated variables are parsed as one string instead of two '-' and var 
+
+integer = /\d+/;
