@@ -4,7 +4,7 @@
 # Assume non-prenex and closed formulas, so no qblock-stmt and no qblock-quant
 # Assume nnf formulas, so the only connectives are AND and OR and gates are never negated
 
-qcirFile = @:formatId @:outputStmt { @:gateStmt /\n/ }*;
+qcirFile = @:formatId @:outputStmt { @:gateStmt /\n/ }* $;
 
 formatId = format_id:'#QCIR-G14' var_count:[integer] /\n/;
 
