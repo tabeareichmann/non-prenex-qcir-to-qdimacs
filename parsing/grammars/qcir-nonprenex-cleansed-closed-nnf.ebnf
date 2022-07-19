@@ -1,18 +1,18 @@
 @@grammar :: QCIR_NONPRENEX_CLEANSED_CLOSED_NNF
+@@comments :: /^#(?!QCIR\-G14)(.*)$/
 
 # Assume non-prenex and closed formulas, so no qblock-stmt and no qblock-quant
 # Assume nnf formulas, so the only connectives are AND and OR and gates are never negated
-# At the moment, input files with comments are not supported
 
-qcirFile = formatId outputStmt {gateStmt /\n/}*;
+qcirFile = @:formatId @:outputStmt { @:gateStmt /\n/ }*;
 
-formatId = '#QCIR-G14' [integer] /\n/;
+formatId = format_id:'#QCIR-G14' var_count:[integer] /\n/;
 
 varList = ','.{ var }+;
 
 litList = ','.{ lit }+ | ();
 
-outputStmt = 'output('lit')' /\n/;
+outputStmt = 'output('output_gate:lit')' /\n/;
 
 gateStmt = 
     gate_name:gvar '=' connective:'and''('inputs:litList')' | 
