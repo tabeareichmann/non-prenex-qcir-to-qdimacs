@@ -12,12 +12,15 @@ varList = ','.{ var }+;
 
 litList = ','.{ lit }+ | ();
 
-outputStmt = 'output('output_gate:lit')' /\n/;
+outputStmt = 'output('@:lit')' /\n/;
 
-gateStmt = 
-    gate_name:gvar '=' connective:'and''('inputs:litList')' | 
-    gate_name:gvar '=' connective:'or''('inputs:litList')' |
-    gate_name:gvar '=' quantifier:quant'('quantified_vars:varList';' input:lit')';
+propGateStmt = 
+    @:gvar '=' @:'and''('@:litList')' | 
+    @:gvar '=' @:'or''('@:litList')';
+
+quantGateStmt = @:gvar '=' @:quant'('@:varList';' @:lit')';
+
+gateStmt = propGateStmt | quantGateStmt;
 
 quant = 'exists' | 'forall';
 
