@@ -8,7 +8,7 @@ class FormulaTree:
         self._variables = set()
 
     def outputStmt(self, output_gate):
-        self._output_gate = output_gate
+        self._output_gate = self.resolve_gate(output_gate)
         self._gates[output_gate] = set()
         return output_gate
 
