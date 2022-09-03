@@ -1,3 +1,4 @@
+import pydot
 from gate import Gate
 
 class FormulaTree:
@@ -8,8 +9,7 @@ class FormulaTree:
         self._variables = set()
 
     def outputStmt(self, output_gate):
-        self._output_gate = self.resolve_gate(output_gate)
-        self._gates[output_gate] = set()
+        self._output_gate = output_gate
         return output_gate
 
     def propGateStmt(self, ast):
@@ -29,6 +29,10 @@ class FormulaTree:
 
         return ast
 
+    def qcirFile(self, ast):
+        self._output_gate = self.resolve_gate(self._output_gate)
+        return ast
+
     def get_circuit(self):
         return self._gates[self._output_gate]
             
@@ -37,3 +41,8 @@ class FormulaTree:
             return self._gates[gate_name]
         else:
             return Gate(gate_name, None, [])
+
+    def visualize(self):
+        graph = pydot.Dot('visualization_of_formula_tree')
+        self._output_gate.visualize(graph)
+        return graph
