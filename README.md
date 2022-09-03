@@ -3,10 +3,17 @@
 Getting started
 -
 
-Requires the [TatSu](https://pypi.org/project/TatSu/#description) package installed. TL;DR:
+Requires the [TatSu](https://pypi.org/project/TatSu/#description) package installed. 
+TL;DR:
 ```
 pip install TatSu
 ```
+
+For visualization, additionally, the [pydot](https://pypi.org/project/pydot/) python package is required as well as the [Graphviz](https://graphviz.org/) visualization software. 
+```
+pip install pydot
+```
+Have a look at the [Graphviz installation guide](https://graphviz.org/download/) for Graphviz on your local system.
 
 Then, the parsing prototype can be run with
 ```
