@@ -20,4 +20,4 @@ ftree = FormulaTree()
 ast = parse(grammar, test_formula, semantics=ftree)
 
 tree = ftree.visualize()
-tree.write_png('test.png')
+tree.write_svg('test.svg')
