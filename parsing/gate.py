@@ -17,9 +17,9 @@ class Gate:
 
     def get_graph_label(self):
         mapping = {
-            'or': '∨',
-            'and': '∧',
-            'forall': '∀{inputs}'.format(inputs=','.join(self._params)),
-            'exists': '∃{inputs}'.format(inputs=','.join(self._params)),
+            'or': '&#8744;',
+            'and': '&#8743;',
+            'forall': '&#8704;{inputs}'.format(inputs=','.join(self._params)),
+            'exists': '&#8707;{inputs}'.format(inputs=','.join(self._params)),
         }
         return mapping[self._connective] if self._connective != None else self._name
