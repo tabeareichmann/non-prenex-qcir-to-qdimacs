@@ -16,8 +16,9 @@ g3 = or(-z, g2)
 g4 = forall(z; g3)
 '''
 
+input = open('./red_1133/axquery_axquery_1133.nonprenex.qcir').read()
 ftree = FormulaTree()
-ast = parse(grammar, test_formula, semantics=ftree)
+ast = parse(grammar, input, semantics=ftree)
 
 tree = ftree.visualize()
 tree.write_svg('test.svg')
