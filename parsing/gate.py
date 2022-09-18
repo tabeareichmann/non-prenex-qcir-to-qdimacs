@@ -23,3 +23,22 @@ class Gate:
             'exists': '<<FONT POINT-SIZE="15">&#8707;{inputs}</FONT><BR/><FONT POINT-SIZE="6">{gate_name}</FONT>>'.format(inputs=','.join(self._params), gate_name=self._name),
         }
         return mapping[self._connective] if self._connective != None else self._name
+
+    def to_string(self):
+        return self._name
+
+    def get_quant_paths(self, quant_paths, curr_trace):
+        append_to_current_trace = self._connective == "forall" or self._connective == "exists"
+        new_curr_trace = curr_trace + tuple([self]) if append_to_current_trace else curr_trace
+        
+        if len(self._inputs) == 0:
+            quant_paths.add(new_curr_trace)
+
+        for child in self._inputs:
+            child.get_quant_paths(quant_paths, new_curr_trace)
+
+    def __eq__(self, obj):
+        return self._name == obj._name
+
+    def __hash__(self):
+        return hash(self._name)

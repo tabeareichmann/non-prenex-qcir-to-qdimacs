@@ -46,3 +46,8 @@ class FormulaTree:
         graph = pydot.Dot('visualization_of_formula_tree')
         self._output_gate.visualize(graph)
         return graph
+
+    def get_quant_paths(self):
+        paths = set()
+        self._output_gate.get_quant_paths(paths, tuple())
+        return paths

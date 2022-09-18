@@ -22,3 +22,5 @@ ast = parse(grammar, input, semantics=ftree)
 
 tree = ftree.visualize()
 tree.write_svg('test.svg')
+for path in (ftree.get_quant_paths()):
+    print([gate.to_string() for gate in path])
