@@ -43,7 +43,10 @@ class Gate:
             union = set().union(*child_paths)
             return union
     def __eq__(self, obj):
-        return self._name == obj._name
+        self._params.sort()
+        obj._params.sort()
+        return self._connective == obj._connective and self._params == obj._params
 
     def __hash__(self):
-        return hash(self._name)
+        self._params.sort()
+        return hash(self._connective + ''.join(self._params))
