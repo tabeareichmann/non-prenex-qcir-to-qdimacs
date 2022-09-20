@@ -27,16 +27,21 @@ class Gate:
     def to_string(self):
         return self._name
 
-    def get_quant_paths(self, quant_paths, curr_trace):
-        append_to_current_trace = self._connective == "forall" or self._connective == "exists"
-        new_curr_trace = curr_trace + tuple([self]) if append_to_current_trace else curr_trace
-        
+    def get_quant_paths(self):
         if len(self._inputs) == 0:
-            quant_paths.add(new_curr_trace)
-
-        for child in self._inputs:
-            child.get_quant_paths(quant_paths, new_curr_trace)
-
+            return set()
+        if self._connective == 'forall' or self._connective == 'exists':
+            child_paths = self._inputs[0].get_quant_paths()
+            if (len(child_paths) == 0):
+                result = set()
+                result.add(tuple([self]))
+                return result
+            else:
+                return { tuple([self]) + path for path in child_paths }
+        elif self._connective == 'or' or self._connective == 'and':
+            child_paths = [ i.get_quant_paths() for i in self._inputs ]
+            union = set().union(*child_paths)
+            return union
     def __eq__(self, obj):
         return self._name == obj._name
 

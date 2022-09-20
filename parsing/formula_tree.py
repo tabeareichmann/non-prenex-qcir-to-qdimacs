@@ -48,6 +48,4 @@ class FormulaTree:
         return graph
 
     def get_quant_paths(self):
-        paths = set()
-        self._output_gate.get_quant_paths(paths, tuple())
-        return paths
+        return self._output_gate.get_quant_paths()
