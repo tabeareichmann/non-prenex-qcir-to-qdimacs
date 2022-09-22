@@ -25,7 +25,7 @@ class Gate:
         return mapping[self._connective] if self._connective != None else self._name
 
     def to_string(self):
-        return self._name
+        return f'{self._name}:{self._connective} {", ".join(self._params)}'
 
     def get_quant_paths(self):
         if len(self._inputs) == 0:
