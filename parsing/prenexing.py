@@ -19,26 +19,35 @@ def simple_symbol_based_path_merging(formula_tree, strategy='d'):
 
     g = paths.copy()
     g.remove(gamma)
-
+    i = 0
     while len(g) > 0:
+        i += 1
+        print("Iteration: ", i)
         critical_paths_g = crit_paths(g)
         delta = list(critical_paths_g)[0]
+        print_path(delta, "delta")
         g.remove(delta)
 
         temp_gamma = split(gamma)
         temp_delta = split(delta)
         zeta = longest_common_prefix(temp_gamma, temp_delta)
+        print_path(zeta, "zeta")
 
         temp_gamma = merge(temp_gamma[len(zeta):])
         temp_delta = merge(temp_delta[len(zeta):])
+
+        
+        print_path(temp_gamma, "temp_gamma")
+        print_path(temp_delta, "temp_delta")
 
         n = len(temp_gamma)
         m = len(temp_delta)
 
         if n == m and temp_gamma[0] != temp_delta[0]:
-            gamma = zip_paths(temp_gamma, temp_delta, 0, len(temp_gamma))
+            gamma = merge(zeta + zip_paths(temp_gamma, temp_delta, 0, len(temp_gamma)))
         else:
             d = prenexing_strategies[strategy](temp_delta)
-            c = m - n + 1
-            gamma = zeta + zip_paths(temp_delta, temp_gamma, 0, d+1) + temp_gamma[d+1:d+c] + zip_paths(temp_gamma[d+c:], temp_delta[d+1:], 0, len(temp_gamma[d+c:]))
+            c = n - m + 1
+            gamma = merge(zeta + zip_paths(temp_delta, temp_gamma, 0, d) + temp_gamma[d:d+c-1] + zip_paths(temp_gamma[d+c-1:], temp_delta[d:], 0, len(temp_gamma[d+c-1:])))
+            print_path(gamma, "Gamma in iteration "+str(i))
     return gamma
