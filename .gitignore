@@ -127,3 +127,6 @@ dmypy.json
 
 # Pyre type checker
 .pyre/
+
+/NCFS-bin-non-cnf-non-prenex-qcir
+/red_1133
