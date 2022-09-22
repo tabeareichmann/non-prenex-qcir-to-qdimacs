@@ -18,7 +18,7 @@ def split(path):
     new_path = tuple()
     for gate in path:
         for variable in gate._params:
-            new_path += tuple([Gate(f'{gate._name}-{variable}', gate._connective, [], params=[variable])])
+            new_path += tuple([Gate(f'{gate._name.split("-", 1)[0]}-{variable}', gate._connective, [], params=[variable])])
     return new_path
 
 def merge(path):
@@ -28,7 +28,7 @@ def merge(path):
             new_path += tuple([gate])
         elif new_path[-1]._connective == gate._connective:
             new_path[-1]._params += gate._params
-            new_path[-1]._name += f'{"-".join(gate._params)}'
+            new_path[-1]._name = new_path[-1]._name.split("-", 1)[0] + "-" + f'{"-".join(new_path[-1]._params)}'
         else:
             new_path += tuple([gate])
     return new_path
