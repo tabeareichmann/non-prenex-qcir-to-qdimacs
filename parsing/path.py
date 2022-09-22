@@ -27,8 +27,8 @@ def merge(path):
         if len(new_path) == 0:
             new_path += tuple([gate])
         elif new_path[-1]._connective == gate._connective:
-            new_path[-1]._params.append(gate._params[0])
-            new_path[-1]._name += f'-{gate._params[0]}'
+            new_path[-1]._params += gate._params
+            new_path[-1]._name += f'{"-".join(gate._params)}'
         else:
             new_path += tuple([gate])
     return new_path
