@@ -3,6 +3,7 @@ from tatsu import parse
 
 from formula_tree import FormulaTree
 from path import get_alternations, crit_paths
+from prenexing import simple_symbol_based_path_merging
 
 grammar = open('./parsing/grammars/qcir-nonprenex-cleansed-closed-nnf.ebnf', 'r').read()
 
@@ -32,9 +33,9 @@ g7 = and(g6, g4)
 g_output = forall(z; g7)
 '''
 
-input = open('./red_1133/axquery_axquery_1133.nonprenex.qcir').read()
+input = open('./test_formulas/test1.qcir').read()
 ftree = FormulaTree()
-ast = parse(grammar, larger_test_formula, semantics=ftree)
+ast = parse(grammar, input, semantics=ftree)
 
 tree = ftree.visualize()
 tree.write_svg('test.svg')
@@ -44,3 +45,5 @@ for path in (ftree.get_quant_paths()):
 
 for path in (crit_paths(ftree.get_quant_paths())):
     print([gate.to_string() for gate in path])
+
+simple_symbol_based_path_merging(ftree, strategy='d')
