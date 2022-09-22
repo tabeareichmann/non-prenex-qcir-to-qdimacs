@@ -1,4 +1,3 @@
-import json
 from tatsu import parse
 
 from formula_tree import FormulaTree
@@ -37,13 +36,16 @@ input = open('./test_formulas/test1.qcir').read()
 ftree = FormulaTree()
 ast = parse(grammar, input, semantics=ftree)
 
-tree = ftree.visualize()
-tree.write_svg('test.svg')
-for path in (ftree.get_quant_paths()):
-    print([gate.to_string() for gate in path])
-    print(get_alternations(path))
+sk_tree = ftree.get_propositional_skeleton()
+vtree = sk_tree.visualize()
+vtree.write_svg('test1_sk.svg')
 
-for path in (crit_paths(ftree.get_quant_paths())):
-    print([gate.to_string() for gate in path])
+prenex_path = simple_symbol_based_path_merging(ftree)
 
-simple_symbol_based_path_merging(ftree, strategy='d')
+path_tree = FormulaTree.from_quant_path(prenex_path)
+path_vtree = path_tree.visualize()
+path_vtree.write_svg('test1_prenex_path.svg')
+
+prenexed_tree = FormulaTree.from_quant_path(prenex_path, propositional_skeleton=sk_tree)
+prenexed_vtree = prenexed_tree.visualize()
+prenexed_vtree.write_svg('test1_prenexed.svg')
