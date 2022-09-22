@@ -8,6 +8,14 @@ class FormulaTree:
         self._gates = {}
         self._variables = set()
 
+    @staticmethod
+    def from_gate(gate):
+        tree = FormulaTree()
+        tree.outputStmt(gate)
+
+        gate.collect_nested_vars_and_gates(tree._variables, tree._gates)
+        return tree
+
     def outputStmt(self, output_gate):
         self._output_gate = output_gate
         return output_gate
@@ -49,3 +57,7 @@ class FormulaTree:
 
     def get_quant_paths(self):
         return self._output_gate.get_quant_paths()
+
+    def get_propositional_skeleton(self):
+        output_gate_sk = self._output_gate.get_propositional_skeleton()
+        return FormulaTree.from_gate(output_gate_sk)

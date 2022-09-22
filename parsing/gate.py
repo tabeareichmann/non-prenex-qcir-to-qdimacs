@@ -42,6 +42,21 @@ class Gate:
             child_paths = [ i.get_quant_paths() for i in self._inputs ]
             union = set().union(*child_paths)
             return union
+
+    def get_propositional_skeleton(self):
+        if self._connective == 'forall' or self._connective == 'exists':
+            return self._inputs[0].get_propositional_skeleton()
+        else:
+            sk_inputs = [i.get_propositional_skeleton() for i in self._inputs]
+            return Gate(self._name, self._connective, sk_inputs, params=self._params)
+
+    def collect_nested_vars_and_gates(self, vars, gates):
+        vars = vars.union(self._name)
+        gates[self._name] = self
+
+        for input in self._inputs:
+            input.collect_nested_vars_and_gates(vars, gates)
+
     def __eq__(self, obj):
         self._params.sort()
         obj._params.sort()
