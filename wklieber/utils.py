@@ -12,19 +12,6 @@ def unique(coll):
         hit.add(x)
         yield x
 
-def negate(fmla):
-    if is_lit(fmla):
-        return -fmla
-    if isinstance(fmla, tuple) and fmla[0] == 'not':
-        return fmla[1]
-    else:
-        assert(isinstance(fmla, tuple))
-        return Fmla('not', fmla)
-
-def is_lit(x):
-    # Returns true if this a literal (as opposed to a formula with logical operators).
-    return type(x) == int
-
 def die(text): 
     sys.stderr.write("Error encountered in function '%s' at line %d:\n" % 
         (sys._getframe(1).f_code.co_name, sys._getframe(1).f_lineno))

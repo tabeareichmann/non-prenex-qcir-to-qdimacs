@@ -1,4 +1,4 @@
-from wklieber.fmla import Fmla
+from wklieber.fmla import Fmla, negate, is_lit
 from wklieber.utils import flatten, unique, negate, is_lit, die, DeadExc
 
 @memoized

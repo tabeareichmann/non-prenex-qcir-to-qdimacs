@@ -21,3 +21,16 @@ class Fmla(tuple):
             Fmla.idx[ret] = Fmla.next_idx
             Fmla.next_idx += 1
         return ret
+
+def negate(fmla):
+    if is_lit(fmla):
+        return -fmla
+    if isinstance(fmla, tuple) and fmla[0] == 'not':
+        return fmla[1]
+    else:
+        assert(isinstance(fmla, tuple))
+        return Fmla('not', fmla)
+
+def is_lit(x):
+    # Returns true if this a literal (as opposed to a formula with logical operators).
+    return type(x) == int
