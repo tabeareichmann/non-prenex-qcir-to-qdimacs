@@ -1,8 +1,8 @@
 from tatsu import parse
 
-from formula_tree import FormulaTree
-from path import get_alternations, crit_paths
-from prenexing import simple_symbol_based_path_merging
+from parsing.formula_tree import FormulaTree
+from prenexing.path import get_alternations, crit_paths
+from prenexing.path_merging import simple_symbol_based_path_merging
 
 grammar = open('./parsing/grammars/qcir-nonprenex-cleansed-closed-nnf.ebnf', 'r').read()
 

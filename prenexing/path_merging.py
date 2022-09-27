@@ -1,4 +1,4 @@
-from path import crit_paths, longest_common_prefix, print_path, print_set_of_paths, zip_paths, split, merge
+from prenexing.path import crit_paths, longest_common_prefix, print_path, print_set_of_paths, zip_paths, split, merge
 
 prenexing_strategies = {
     'adeu': lambda delta : 1 if delta[0]._connective == 'exists' else 0,

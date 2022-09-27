@@ -1,5 +1,5 @@
 import pydot
-from gate import Gate
+from parsing.gate import Gate
 
 class FormulaTree:
 

@@ -1,4 +1,4 @@
-from gate import Gate
+from parsing.gate import Gate
 
 def crit_paths(paths):
     mapped_paths = [(get_alternations(path),path) for path in paths]
