@@ -3,21 +3,21 @@
 Getting started
 -
 
-Requires the [TatSu](https://pypi.org/project/TatSu/#description) package installed. 
+Requires the [TatSu](https://pypi.org/project/TatSu/#description) package installed (tested with versions 4.4.0 and 5.6.1). 
 TL;DR:
 ```
-pip install TatSu
+pip install TatSu==5.6.1
 ```
 
-For visualization, additionally, the [pydot](https://pypi.org/project/pydot/) python package is required as well as the [Graphviz](https://graphviz.org/) visualization software. 
+For visualization, additionally, the [pydot](https://pypi.org/project/pydot/) python package is required (tested with version 1.4.2) as well as the [Graphviz](https://graphviz.org/) visualization software. 
 ```
-pip install pydot
+pip install pydot==1.4.2
 ```
-Have a look at the [Graphviz installation guide](https://graphviz.org/download/) for Graphviz on your local system.
+Have a look at the [Graphviz installation guide](https://graphviz.org/download/) for Graphviz on your local system. For formatting graph nodes consult the [Node shape documentation](https://graphviz.org/doc/info/shapes.html#html).
 
-Then, the parsing prototype can be run with
+Then, the prototype can be run with
 ```
-python3 ./parsing/parse-instance.py
+python3 main.py
 ```
 
 In the *grammars* folder, there is a specification of QCIRC-formulas that are not in prenex form, cleansed, closed and in nnf. The spec is written in [EBNF-style](https://en.wikipedia.org/wiki/Extended_Backus%E2%80%93Naur_form) and adapted from the [QCIRC-specification](http://www.qbflib.org/qcir.pdf). Have a look at the [TatSu Docs](https://tatsu.readthedocs.io/en/stable/syntax.html#rules) for more details.
