@@ -19,6 +19,7 @@ import re
 import pdb
 import pprint
 import argparse
+import io
 from collections import OrderedDict
 
 stop = pdb.set_trace
@@ -78,19 +79,9 @@ class LineReader:
 
 ############################################################
 
-def read_qcir_file(filename):
-    try:
-        if (filename == '-'):
-            filename = "<stdin>"
-            file_ptr = sys.stdin
-        elif (filename.endswith(".gz")):
-            import gzip
-            file_ptr = gzip.open(filename, 'r')
-        else:
-            file_ptr = open(filename, 'r')
-    except IOError as e:
-        die(str(e))
-    in_file = LineReader(file_ptr)
+def read_qcir_file(qcir_string):
+    
+    in_file = LineReader(io.StringIO(qcir_string))
 
     def LineDie(msg):
         sys.stderr.write("Error on line %i of %s. " % (in_file.line_num, filename))
@@ -656,7 +647,6 @@ def vars_in_fmla(fmla, var_set=None, hit=None):
 
 def parse_args():
     parser = argparse.ArgumentParser(formatter_class=argparse.RawDescriptionHelpFormatter)
-    parser.add_argument("input_file", type=str)
     parser.add_argument("-o", type=str, dest="outfile", required=True, help="output file")
     parser.add_argument("--keep-var-names", choices=[0,1], type=int, default=1, dest="keep_var_names",
         help="Use VarName comment lines")
@@ -670,8 +660,7 @@ def parse_args():
     args = parser.parse_args()
     return args
 
-
-def main():
+def prenex_qcir_to_qdimacs(qcir_string):
     args = parse_args()
     Glo.args = args
 
@@ -680,7 +669,7 @@ def main():
 
     sys.setrecursionlimit(args.reclim)
 
-    [quant_prefix, fmla] = read_qcir_file(args.input_file)
+    [quant_prefix, fmla] = read_qcir_file(qcir_string)
 
     orig_fmla = fmla
 
@@ -695,7 +684,3 @@ def main():
         write_dimacs(fmla, quant_prefix, args.outfile)
     else:
         die("Unknown format '%s'.\nValid choices for '--fmt' option are 'qcir' and 'qdimacs'.\n" % (args.fmt,))
-    return
-
-if __name__ == "__main__":
-    main()
