@@ -46,12 +46,18 @@ class Gate:
             union = set().union(*child_paths)
             return union
 
-    def get_propositional_skeleton(self):
+    def get_propositional_skeleton(self, cache):
+        '''
+        A gate might be input of serveral other gates, therefore get_propositional_skeleton might be called multiple times on the same gate.
+        To prevent duplicate structures and to increase performance, the cache dictionary serves as caching mechanism.
+        '''
         if self._connective == 'forall' or self._connective == 'exists':
-            return self._inputs[0].get_propositional_skeleton()
+            return self._inputs[0].get_propositional_skeleton(cache)
         else:
-            sk_inputs = [i.get_propositional_skeleton() for i in self._inputs]
-            return Gate(self._name, self._connective, sk_inputs, params=self._params)
+            if self._name not in cache:
+                sk_inputs = [i.get_propositional_skeleton(cache) for i in self._inputs]
+                cache[self._name] = Gate(self._name, self._connective, sk_inputs, params=self._params)
+            return cache[self._name]            
 
     def collect_nested_vars_and_gates(self, vars, gates):
         vars = vars.union(self._name)
@@ -60,12 +66,17 @@ class Gate:
         for input in self._inputs:
             input.collect_nested_vars_and_gates(vars, gates)
 
-    def to_qcir_string(self):
-        if len(self._inputs) == 0:
+    def to_qcir_string(self, visited):
+        '''
+        A gate might be input of serveral other gates, therefore get_propositional_skeleton might be called multiple times on the same gate.
+        Gate definitions must not show up multiple times in the QCIR export, so the set visited tracks all gates already visited.
+        '''
+        if len(self._inputs) == 0 or self._name in visited:
             return ''
 
         own_qcir_def = f"{self._name} = {self._connective}({', '.join([i._name for i in self._inputs])})"
-        child_qcir_def = '\n'.join(filter(lambda s: len(s) > 0, [i.to_qcir_string() for i in self._inputs]))
+        child_qcir_def = '\n'.join(filter(lambda s: len(s) > 0, [i.to_qcir_string(visited) for i in self._inputs]))
+        visited.add(self._name)
         return child_qcir_def + ('\n' if len(child_qcir_def) > 0 else '') + own_qcir_def
 
     def __eq__(self, obj):

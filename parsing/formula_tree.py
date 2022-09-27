@@ -74,7 +74,7 @@ class FormulaTree:
         return self._output_gate.get_quant_paths()
 
     def get_propositional_skeleton(self):
-        output_gate_sk = self._output_gate.get_propositional_skeleton()
+        output_gate_sk = self._output_gate.get_propositional_skeleton({})
         return FormulaTree.from_gate(output_gate_sk)
 
     def to_qcir_string(self):
@@ -88,6 +88,6 @@ class FormulaTree:
         
         output_line = f'output({top_gate._name})'
 
-        prop_gate_lines = top_gate.to_qcir_string()
+        prop_gate_lines = top_gate.to_qcir_string(set())
 
         return "\n".join([quant_prefix_string, output_line, prop_gate_lines])
