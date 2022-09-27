@@ -1,3 +1,4 @@
+import logging
 from prenexing.path import crit_paths, longest_common_prefix, print_path, print_set_of_paths, zip_paths, split, merge
 
 prenexing_strategies = {
@@ -22,7 +23,7 @@ def simple_symbol_based_path_merging(formula_tree, strategy='d'):
     i = 0
     while len(g) > 0:
         i += 1
-        print("Iteration: ", i)
+        logging.info(f'Iteration: {i}')
         critical_paths_g = crit_paths(g)
         delta = list(critical_paths_g)[0]
         print_path(delta, "delta")

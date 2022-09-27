@@ -1,3 +1,4 @@
+import logging
 from parsing.gate import Gate
 
 def crit_paths(paths):
@@ -50,12 +51,11 @@ def zip_paths(path1, path2, begin, end):
     return new_gamma
 
 def print_path(path, name):
-    print(f'{name}:')
-    print([gate.to_string() for gate in path]) 
-    print()
+    logging.info(f'{name}:\n\t{[gate.to_string() for gate in path]}')
 
 def print_set_of_paths(path_set, name):
-    print(f'{name}:')
+    "for debugging purposes only"
+    logging.info(f"{name}:")
     for path in path_set:
-        print([gate.to_string() for gate in path])
-    print()
+        path_string = f"\t{', '.join([gate.to_string() for gate in path])}"
+        logging.info(path_string)
