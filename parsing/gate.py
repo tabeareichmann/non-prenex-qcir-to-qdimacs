@@ -71,7 +71,7 @@ class Gate:
         A gate might be input of serveral other gates, therefore get_propositional_skeleton might be called multiple times on the same gate.
         Gate definitions must not show up multiple times in the QCIR export, so the set visited tracks all gates already visited.
         '''
-        if len(self._inputs) == 0 or self._name in visited:
+        if not self._connective or self._name in visited:
             return ''
 
         own_qcir_def = f"{self._name} = {self._connective}({', '.join([i._name for i in self._inputs])})"

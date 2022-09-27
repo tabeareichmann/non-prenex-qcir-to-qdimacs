@@ -18,6 +18,12 @@ class FormulaTree:
 
     @staticmethod
     def from_quant_path(path, propositional_skeleton=None):
+        '''
+        We assume no free variables, so if there is no quantifier path, then the formula contains Verum and Falsum constants as gate inputs only.
+        '''
+        if not len(path):
+            return propositional_skeleton
+
         output_gate = Gate(path[0]._name, path[0]._connective, [], params=path[0]._params)
 
         curr_gate = output_gate
@@ -38,9 +44,9 @@ class FormulaTree:
     def propGateStmt(self, ast):
         gate_name,connective,inputs = ast
 
-        new_variables = set(self._gates).difference(set(inputs))
+        new_variables = set(self._gates).difference(set(inputs) if inputs else set())
         self._variables = self._variables.union(new_variables)
-        self._gates[gate_name] = Gate(gate_name, connective, [ self.resolve_gate(i) for i in inputs ])
+        self._gates[gate_name] = Gate(gate_name, connective, [ self.resolve_gate(i) for i in inputs ] if inputs else [])
 
         return ast
 
