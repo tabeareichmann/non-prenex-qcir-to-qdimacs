@@ -57,6 +57,14 @@ class Gate:
         for input in self._inputs:
             input.collect_nested_vars_and_gates(vars, gates)
 
+    def to_qcir_string(self):
+        if len(self._inputs) == 0:
+            return ''
+
+        own_qcir_def = f"{self._name} = {self._connective}({','.join([i._name for i in self._inputs])})"
+        child_qcir_def = '\n'.join(filter(lambda s: len(s) > 0, [i.to_qcir_string() for i in self._inputs]))
+        return child_qcir_def + ('\n' if len(child_qcir_def) > 0 else '') + own_qcir_def
+
     def __eq__(self, obj):
         self._params.sort()
         obj._params.sort()

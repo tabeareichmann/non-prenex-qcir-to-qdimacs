@@ -76,3 +76,18 @@ class FormulaTree:
     def get_propositional_skeleton(self):
         output_gate_sk = self._output_gate.get_propositional_skeleton()
         return FormulaTree.from_gate(output_gate_sk)
+
+    def to_qcir_string(self):
+        quant_prefix_string = '#QCIR-G14'
+        
+        top_gate = self._output_gate
+        while top_gate._connective == 'forall' or top_gate._connective == 'exists':
+            top_gate_str = f"{top_gate._connective}({','.join(top_gate._params)})"
+            quant_prefix_string += '\n' + top_gate_str
+            top_gate = top_gate._inputs[0]
+        
+        output_line = f'output({top_gate._name})'
+
+        prop_gate_lines = top_gate.to_qcir_string()
+
+        return "\n".join([quant_prefix_string, output_line, prop_gate_lines])
