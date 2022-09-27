@@ -27,7 +27,7 @@ class FormulaTree:
             curr_gate = next
 
         if propositional_skeleton != None:
-            next._inputs += [propositional_skeleton._output_gate]
+            curr_gate._inputs += [propositional_skeleton._output_gate]
         
         return FormulaTree.from_gate(output_gate)
 
