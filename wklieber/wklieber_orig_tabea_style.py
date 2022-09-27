@@ -644,24 +644,7 @@ def vars_in_fmla(fmla, var_set=None, hit=None):
     return var_set
 
 
-
-def parse_args():
-    parser = argparse.ArgumentParser(formatter_class=argparse.RawDescriptionHelpFormatter)
-    parser.add_argument("-o", type=str, dest="outfile", required=True, help="output file")
-    parser.add_argument("--keep-var-names", choices=[0,1], type=int, default=1, dest="keep_var_names",
-        help="Use VarName comment lines")
-    parser.add_argument("--keep-gate-names", choices=[0,1], type=int, default=0, dest="keep_gate_names")
-    parser.add_argument("--native-ite", choices=[0,1], type=int, default=0, dest="native_ite",
-        help="Use special 4-clause encoding for XOR and ITE gates")
-    parser.add_argument("--reclim", type=int, default=2000, help="recursion limit " +
-        "(increase this if Python dies with 'RuntimeError: maximum recursion depth exceeded')")
-    parser.add_argument("--fmt", type=str, help="output file format ('qcir', 'qdimacs')")
-
-    args = parser.parse_args()
-    return args
-
-def prenex_qcir_to_qdimacs(qcir_string):
-    args = parse_args()
+def prenex_qcir_to_qdimacs(qcir_string, args):
     Glo.args = args
 
     if args.fmt is None:
