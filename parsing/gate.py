@@ -13,7 +13,10 @@ class Gate:
         
         for i in self._inputs:
             i.visualize(graph)
-            graph.add_edge(pydot.Edge(self._name, i._name))    
+            
+            edge_exists = len(graph.get_edge(self._name, i._name))
+            if not edge_exists:
+                graph.add_edge(pydot.Edge(self._name, i._name))    
 
     def get_graph_label(self):
         mapping = {
@@ -61,7 +64,7 @@ class Gate:
         if len(self._inputs) == 0:
             return ''
 
-        own_qcir_def = f"{self._name} = {self._connective}({','.join([i._name for i in self._inputs])})"
+        own_qcir_def = f"{self._name} = {self._connective}({', '.join([i._name for i in self._inputs])})"
         child_qcir_def = '\n'.join(filter(lambda s: len(s) > 0, [i.to_qcir_string() for i in self._inputs]))
         return child_qcir_def + ('\n' if len(child_qcir_def) > 0 else '') + own_qcir_def
 
