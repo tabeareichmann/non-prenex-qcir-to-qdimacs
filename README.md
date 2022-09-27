@@ -17,8 +17,9 @@ Have a look at the [Graphviz installation guide](https://graphviz.org/download/)
 
 Then, the prototype can be run with
 ```
-python3 main.py
+python3 PATH_TO_INPUT_FILE main.py -o PATH_TO_OUTPUT_FILE
 ```
+The *log-level* argument controls logging of the prenexing component, all other arguments are propagated to the QDIMACS transformation- and export component courtesy of [Will Klieber](https://www.wklieber.com/ghostq/qcir-converter.html).
 
 In the *grammars* folder, there is a specification of QCIRC-formulas that are not in prenex form, cleansed, closed and in nnf. The spec is written in [EBNF-style](https://en.wikipedia.org/wiki/Extended_Backus%E2%80%93Naur_form) and adapted from the [QCIRC-specification](http://www.qbflib.org/qcir.pdf). Have a look at the [TatSu Docs](https://tatsu.readthedocs.io/en/stable/syntax.html#rules) for more details.
 
