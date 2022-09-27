@@ -1,0 +1,10 @@
+# very small toy instance
+
+#QCIR-G14 7
+
+output(g4)
+
+g1 = and(x1, x2, z)
+g2 = exists(x1, x2; g1)
+g3 = or(-z, g2)
+g4 = forall(z; g3)

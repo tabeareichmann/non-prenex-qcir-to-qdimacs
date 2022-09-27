@@ -1,0 +1,14 @@
+# slightly larger toy instance
+
+#QCIR-G14 7
+
+output(g_output)
+
+g1 = or(z, -z)
+g2 = or(y, -y)
+g3 = exists(y; g2)
+g4 = and(g3, g1)
+g5 = or(x, -x)
+g6 = forall(x; g5)
+g7 = and(g6, g4)
+g_output = forall(z; g7)
