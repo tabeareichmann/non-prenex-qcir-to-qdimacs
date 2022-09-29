@@ -24,9 +24,11 @@ args = parser.parse_args()
 
 logging.basicConfig(format='%(message)s', level=args.log_level)
 
-grammar = open('./parsing/grammars/qcir-nonprenex-cleansed-closed-nnf.ebnf', 'r').read()
+with open('./parsing/grammars/qcir-nonprenex-cleansed-closed-nnf.ebnf', 'r') as grammar_file:
+    grammar = grammar_file.read()
+with open(args.input_file, 'r') as input_file:
+    input = input_file.read()
 
-input = open(args.input_file).read()
 ftree = FormulaTree()
 ast = parse(grammar, input, semantics=ftree)
 

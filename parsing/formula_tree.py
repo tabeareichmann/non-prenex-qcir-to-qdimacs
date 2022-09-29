@@ -100,5 +100,5 @@ class FormulaTree:
 
     def to_qcir_file(self, filepath):
         with open(filepath, 'w') as file:
-            file.write(self.to_qcir_string())
+            file.write(self.to_qcir_string() + '\n')
             
