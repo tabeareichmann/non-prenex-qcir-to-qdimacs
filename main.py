@@ -8,7 +8,8 @@ from wklieber.wklieber_orig_tabea_style import prenex_qcir_to_qdimacs
 
 parser = argparse.ArgumentParser(formatter_class=argparse.RawDescriptionHelpFormatter)
 parser.add_argument("input_file", type=str)
-parser.add_argument("-o", type=str, dest="outfile", required=True, help="output file")
+parser.add_argument("--qcir-output-file", type=str, help="output file for the prenexed formula in qcir format")
+parser.add_argument("-o", type=str, dest="outfile", required=True, help="klieber output file")
 parser.add_argument("--keep-var-names", choices=[0,1], type=int, default=1, dest="keep_var_names",
     help="Use VarName comment lines")
 parser.add_argument("--keep-gate-names", choices=[0,1], type=int, default=0, dest="keep_gate_names")
@@ -34,5 +35,7 @@ sk_tree = ftree.get_propositional_skeleton()
 prenex_path = simple_symbol_based_path_merging(ftree)
 
 prenexed_tree = FormulaTree.from_quant_path(prenex_path, propositional_skeleton=sk_tree)
+if args.qcir_output_file:
+    prenexed_tree.to_qcir_file(args.qcir_output_file)
 
 prenex_qcir_to_qdimacs(prenexed_tree.to_qcir_string(), args)

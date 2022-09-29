@@ -97,3 +97,8 @@ class FormulaTree:
         prop_gate_lines = top_gate.to_qcir_string(set())
 
         return "\n".join([quant_prefix_string, output_line, prop_gate_lines])
+
+    def to_qcir_file(self, filepath):
+        with open(filepath, 'w') as file:
+            file.write(self.to_qcir_string())
+            
