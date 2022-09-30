@@ -4,7 +4,7 @@ import argparse
 
 from parsing.formula_tree import FormulaTree
 from prenexing.path_merging import simple_symbol_based_path_merging
-from wklieber.wklieber_orig_tabea_style import prenex_qcir_to_qdimacs
+from wklieber.wklieber_python3 import prenex_qcir_to_qdimacs
 
 parser = argparse.ArgumentParser(formatter_class=argparse.RawDescriptionHelpFormatter)
 parser.add_argument("input_file", type=str)
