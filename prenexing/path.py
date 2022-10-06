@@ -18,6 +18,7 @@ def get_alternations(path):
 def split(path):
     new_path = tuple()
     for gate in path:
+        gate._params.sort()
         for variable in gate._params:
             new_path += tuple([Gate(f'{gate._name.split("-", 1)[0]}-{variable}', gate._connective, [], params=[variable])])
     return new_path
